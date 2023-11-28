@@ -128,7 +128,7 @@ class my_ui(Ui_MainWindow):
                 self.x += 1
 
             except ValueError:
-                None
+                print('ValueError')
             self.textEdit.moveCursor(QTextCursor.MoveOperation.End)
         if self.series.count() > 40000:
             self.series.removePoints(0, self.series.count() - 40000)
@@ -308,24 +308,33 @@ class my_ui(Ui_MainWindow):
 
 
     def pushButton_8_slot(self):
+        dialog = QDialog(None)
+        dialog.setWindowTitle("功能未添加")
+        dialog.resize(200, 100)
 
-        deg=[]
-        for line in self.textEdit.toPlainText().splitlines():
-            deg.append(float(line))
-        self.series.clear()
-        self.x = 0.0
-        self.textEdit.clear()
-        percentile = np.percentile(deg, (25, 50, 75), interpolation='midpoint')
-        Q1 = percentile[0]#上四分位数
-        Q3 = percentile[2]#下四分位数
-        IQR = Q3 - Q1#四分位距
-        ulim = Q3 + 1.5*IQR#上限 非异常范围内的最大值
-        llim = Q1 - 1.5*IQR#下限 非异常范围内的最小值
-        for i in range(len(deg)):
-            if(llim<deg[i] and deg[i]<ulim):
-                self.series.append(self.x, deg[i])
-                self.x +=1
-                self.textEdit.insertPlainText(str(int(deg[i]))+'\n')
-        self.textEdit.moveCursor(QTextCursor.MoveOperation.End)
+        center_point = QDesktopWidget().availableGeometry().center()
+        dialog.move(center_point - dialog.rect().center())
+
+        message = QMessageBox(dialog)
+        message.setText("该功能尚未添加！")
+        message.exec_()
+        # deg=[]
+        # for line in self.textEdit.toPlainText().splitlines():
+        #     deg.append(float(line))
+        # self.series.clear()
+        # self.x = 0.0
+        # self.textEdit.clear()
+        # percentile = np.percentile(deg, (25, 50, 75), interpolation='midpoint')
+        # Q1 = percentile[0]#上四分位数
+        # Q3 = percentile[2]#下四分位数
+        # IQR = Q3 - Q1#四分位距
+        # ulim = Q3 + 1.5*IQR#上限 非异常范围内的最大值
+        # llim = Q1 - 1.5*IQR#下限 非异常范围内的最小值
+        # for i in range(len(deg)):
+        #     if(llim<deg[i] and deg[i]<ulim):
+        #         self.series.append(self.x, deg[i])
+        #         self.x +=1
+        #         self.textEdit.insertPlainText(str(int(deg[i]))+'\n')
+        # self.textEdit.moveCursor(QTextCursor.MoveOperation.End)
 
         

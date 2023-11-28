@@ -8,7 +8,7 @@ import mymainwindow
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)   
-    mainWindow = QMainWindow()
+    mainWindow = QMainWindow(None)
     ui = mymainwindow.my_ui()
     ui.setupUi(mainWindow)
     ui.serial_init()
